@@ -1,7 +1,4 @@
-const TokenAddressSpace=()=>{
-    const tokenAddressSpace=[
-        '0xC5a7c173b055B762D9FB798FAb14FB4cD7095355'
-    ]
+const TokenAddressSpace=({tokenAddressSpace})=>{
     return (
         <>
             <label>Token Address space</label>

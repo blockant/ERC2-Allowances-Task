@@ -1,9 +1,10 @@
-import { SET_METAMASK_ADDRESS, NO_ACTION, SET_METAMASK_BALANCE } from "../actions/types";
+import { SET_METAMASK_ADDRESS, NO_ACTION, SET_METAMASK_BALANCE , SET_ALLOWANCES} from "../actions/types";
 
 const initialState = {
     isMetaMaskConnected: null,
     metaMaskAddress: null,
-	metaMaskBalance: null
+	metaMaskBalance: null,
+	allowances: null 
 };
 
 const metamask = (state = initialState, action) => {
@@ -21,6 +22,11 @@ const metamask = (state = initialState, action) => {
 				...state,
 				metaMaskBalance: payload
 			}
+		case SET_ALLOWANCES:
+			return{
+				...state,
+				allowances: payload
+			}	
 		case NO_ACTION:
 		default:
 			return state;

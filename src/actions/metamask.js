@@ -1,6 +1,6 @@
-import {  SET_METAMASK_ADDRESS, NO_ACTION, SET_METAMASK_BALANCE} from "./types";
+import {  SET_METAMASK_ADDRESS, NO_ACTION, SET_METAMASK_BALANCE, SET_ALLOWANCES} from "./types";
 import Web3 from "web3";
-
+import ERC20TokenABI from '../ERC20TokenABI.json'
 //Login Metamask
 export const loginMetaMask=(address)=>(dispatch)=>{
     try{
@@ -45,4 +45,52 @@ export const setMetaMaskBalance=(metaMaskAddress)=>async(dispatch)=>{
 		console.log(err)
         dispatch({ type: NO_ACTION });
     }
+}
+
+//Get Allowances
+export const getAllowances=(token_addresses, spenderAdrres)=>async(dispatch)=>{
+    if (window.ethereum) {
+        window.web3 = new Web3(window.ethereum);
+        await window.ethereum.enable();
+    }
+    if (window.web3) {
+        window.web3 = new Web3(window.web3.currentProvider);
+    } else {
+        dispatch({
+            type: NO_ACTION
+        });
+    }
+    const web3 = window.web3;
+    const response={}
+    for (const address of token_addresses) {
+        const contract = new web3.eth.Contract(ERC20TokenABI, address);
+        const allowance = await contract.methods.allowance(address, spenderAdrres).call();
+        response[`${address}`]=allowance
+    }
+    console.log('Response is', response)  
+    dispatch({
+        type: SET_ALLOWANCES,
+        payload:response
+    })
+}
+
+export const setAllowancesToZero=(metamaskAddress, tokenAddress, spenderAddress)=>async(dispatch)=>{
+    console.log('I am Called')
+    console.log(metamaskAddress)
+    console.log(tokenAddress)
+    console.log(spenderAddress)
+    if (window.ethereum) {
+        window.web3 = new Web3(window.ethereum);
+        await window.ethereum.enable();
+    }
+    if (window.web3) {
+        window.web3 = new Web3(window.web3.currentProvider);
+    } else {
+        dispatch({
+            type: NO_ACTION
+        });
+    }
+    const web3 = window.web3;
+    const tokenContract = new web3.eth.Contract(ERC20TokenABI, tokenAddress);
+    await tokenContract.methods.approve(spenderAddress, 0).send({from: metamaskAddress})
 }

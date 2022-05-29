@@ -9,7 +9,6 @@ function App() {
   return (
     <>
       <Provider store={store}>
-        <TokenAddressSpace></TokenAddressSpace>
         <ConnectMetamask></ConnectMetamask>  
         <AddressInput></AddressInput>
       </Provider>
