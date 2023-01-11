@@ -1,5 +1,4 @@
 import {  SET_METAMASK_ADDRESS, NO_ACTION, SET_METAMASK_BALANCE} from "./types";
-import token from '../token.json'
 import Web3 from "web3";
 
 //Login Metamask
@@ -30,15 +29,18 @@ export const setMetaMaskBalance=(metaMaskAddress)=>async(dispatch)=>{
 			});
         }
         // setWeb3(window.web3);
-        const web3 = window.web3;
-        const contract = new web3.eth.Contract(token, "0x09a7277b72ec7feb6ceedb52932f279fd762fa3a");
-        const token_count = await contract.methods.balanceOf(metaMaskAddress).call();
-		// const token_count=await web3.eth.getBalance(metaMaskAddress)
-		console.log('Token is', token_count)
+        //const web3 = window.web3;
+        // const contract = new web3.eth.Contract(token, "0x09a7277b72ec7feb6ceedb52932f279fd762fa3a");
+        // const token_count = await contract.methods.balanceOf(metaMaskAddress).call();
+		// // const token_count=await web3.eth.getBalance(metaMaskAddress)
+		// console.log('Token is', token_count)
+        // dispatch({
+        //     type: SET_METAMASK_BALANCE,
+        //     payload: token_count?.slice(0, -18)
+        // })
         dispatch({
-            type: SET_METAMASK_BALANCE,
-            payload: token_count?.slice(0, -18)
-        })
+            type: NO_ACTION
+        });
     }catch(err){
 		console.log(err)
         dispatch({ type: NO_ACTION });
