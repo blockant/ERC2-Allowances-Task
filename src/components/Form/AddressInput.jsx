@@ -5,8 +5,9 @@ import { getAllowances } from "../../actions/metamask";
 import TokenAddressSpace from "../Landing/TokenAddressSpace";
 import AllowedUserComponent from '../Allowance'
 const tokenAddressSpace=[
-    '0xC5a7c173b055B762D9FB798FAb14FB4cD7095355',
-    '0x3D6d10CB4dd548D02578cD2E342F17c386840689'
+    // '0xC5a7c173b055B762D9FB798FAb14FB4cD7095355',
+    // '0x3D6d10CB4dd548D02578cD2E342F17c386840689'
+    '0x0461696c43132c020d59e84ede76f174f504e784'
 ]
 const AddressInputForm=({getAllowances, allowances, metaMaskAddress})=>{
     const [spenderAddressValue, setSpenderAddress] = React.useState("");
@@ -17,7 +18,7 @@ const AddressInputForm=({getAllowances, allowances, metaMaskAddress})=>{
     const onGetAllowancesHandler=async(event)=>{
         console.log('I Am Called')
         event.preventDefault()
-        await getAllowances(tokenAddressSpace, spenderAddressValue.toLowerCase())
+        await getAllowances(tokenAddressSpace, spenderAddressValue.toLowerCase(), metaMaskAddress.toLowerCase())
     }
     return (<>
         <TokenAddressSpace tokenAddressSpace={tokenAddressSpace}></TokenAddressSpace>

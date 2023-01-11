@@ -48,7 +48,7 @@ export const setMetaMaskBalance=(metaMaskAddress)=>async(dispatch)=>{
 }
 
 //Get Allowances
-export const getAllowances=(token_addresses, spenderAdrres)=>async(dispatch)=>{
+export const getAllowances=(token_addresses, spenderAdrres, ownerAddress)=>async(dispatch)=>{
     if (window.ethereum) {
         window.web3 = new Web3(window.ethereum);
         await window.ethereum.enable();
@@ -64,7 +64,10 @@ export const getAllowances=(token_addresses, spenderAdrres)=>async(dispatch)=>{
     const response={}
     for (const address of token_addresses) {
         const contract = new web3.eth.Contract(ERC20TokenABI, address);
-        const allowance = await contract.methods.allowance(address, spenderAdrres).call();
+        console.log('Owner is', ownerAddress)
+        console.log('Spender is', spenderAdrres)
+        const allowance = await contract.methods.allowance(ownerAddress, spenderAdrres).call();
+        console.log('Allowance is', allowance)
         response[`${address}`]=allowance
     }
     console.log('Response is', response)  
